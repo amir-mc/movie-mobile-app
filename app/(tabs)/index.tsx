@@ -4,6 +4,7 @@ import { fetchMovies } from "@/services/api";
 import useFetch from "@/services/useFetch";
 import { useRouter } from "expo-router";
 import { ActivityIndicator, FlatList, Image, ScrollView, Text, View } from "react-native"; // Text از react-native ایمپورت شده
+import MovieCard from "../components/MovieCard";
 import Searchbar from "../components/searchbar";
 
 export default function Index() {
@@ -39,7 +40,9 @@ export default function Index() {
                   paddingRight:5,
                   marginBottom:10
                 }} className="mt-2 pb-32 " scrollEnabled={false} data={movie} renderItem={({item})=>(
-                  <Text className="text-white">{item.title}</Text>
+                  <MovieCard
+                  {...item}
+                  />
                 )}/>
             </>
           </View>

@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./app/**/*.{js,jsx,ts,tsx}", // مسیر صحیح برای Expo Router
+    "./app/**/*.{js,jsx,ts,tsx}","./components/**/*.{js,jsx,ts,tsx}" // مسیر صحیح برای Expo Router
   ],
   presets: [require("nativewind/preset")],
   theme: {
