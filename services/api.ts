@@ -7,8 +7,8 @@ export const TMDB_URL={
     }
 } 
 export const fetchMovies= async({query}:{query:string})=>{
-    const endpoint= query ? `${TMDB_URL.BASE_URL}/discover/movie?query=${encodeURIComponent(query)}`:
-    `${TMDB_URL.BASE_URL}/discover/movie?sort_by=popularity.desc`
+    const endpoint= query ? `${TMDB_URL.BASE_URL}/search/movie?query=${encodeURIComponent(query)}`:
+    `${TMDB_URL.BASE_URL}/discover/movie?include_adult=true&include_video=false&language=en-US&page=1&sort_by=vote_count.desc`
     const response=await fetch(endpoint,{
         method:'GET',
         headers:TMDB_URL.Header
