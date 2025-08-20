@@ -38,7 +38,7 @@ const Search = () => {
             ) : (
               <View className="flex-1 mt-5 items-center justify-between">
                 <Searchbar
-                  placeholder="search for mooov"
+                  placeholder="Search Movie"
                   value={searchQuery}
                   onChangeText={(text:string)=>setSearchQuery(text)}
                 />
