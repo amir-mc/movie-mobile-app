@@ -1,6 +1,7 @@
 import { icons } from '@/constants/icons'
 import { images } from '@/constants/images'
 import { fetchMovies } from '@/services/api'
+import { updateserchCount } from '@/services/appwrite'
 import useFetch from '@/services/useFetch'
 import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, FlatList, Image, ScrollView, Text, View } from 'react-native'
@@ -14,7 +15,9 @@ const Search = () => {
       const Timeout =setTimeout(async()=>{
         if(searchQuery.trim()){
           await loadMovie()
-        
+          if(movie?.length>0 && movie?.[0])
+          await updateserchCount(searchQuery,movie[0])
+          
       }else{
         reset()
       }}, 900);
