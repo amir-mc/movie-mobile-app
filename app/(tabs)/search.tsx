@@ -17,7 +17,6 @@ const Search = () => {
           await loadMovie()
           if(movie?.length>0 && movie?.[0])
           await updateserchCount(searchQuery,movie[0])
-          
       }else{
         reset()
       }}, 900);
