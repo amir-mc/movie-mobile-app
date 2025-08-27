@@ -47,7 +47,7 @@ export default function Index() {
                   gap:20,
                   paddingRight:5,
                   marginBottom:10
-                }} className="mt-2 pb-32 " scrollEnabled={false} data={tradingMov} renderItem={({item ,index})=>(
+                }} className="mt-2 pb-32 " data={tradingMov} renderItem={({item ,index})=>(
                   <Text className="text-white">{item.title}</Text>
                 )}/>
               </View> 
