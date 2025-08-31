@@ -54,6 +54,7 @@ export default function Index() {
              
              )}
             <>
+            {/* FIND trouble  */}
                <Text className="text-lg text-white font-bold ">recently Movie</Text>
                 <FlatList keyExtractor={(item)=>item.id.toString()} numColumns={3} columnWrapperStyle={{
                   justifyContent:"flex-start",
