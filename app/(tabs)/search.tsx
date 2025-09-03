@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 import { ActivityIndicator, FlatList, Image, ScrollView, Text, View } from 'react-native'
 import MovieCard from '../components/MovieCard'
 import Searchbar from '../components/searchbar'
-
+ 
 const Search = () => {
   const [searchQuery,setSearchQuery]=useState('')
     const { data: movie, loading, error,refech:loadMovie,reset } = useFetch(() => fetchMovies({ query: searchQuery }),false);
