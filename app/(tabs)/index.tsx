@@ -7,6 +7,7 @@ import { useRouter } from "expo-router";
 import { ActivityIndicator, Dimensions, FlatList, Image, ScrollView, Text, View } from "react-native";
 import MovieCard from "../components/MovieCard";
 import Searchbar from "../components/searchbar";
+import TrendingCard from "../components/TrendingCard";
 
 const { width } = Dimensions.get('window');
 
@@ -49,29 +50,17 @@ export default function Index() {
                 </Text>
 
                 {/* Horizontal FlatList for Trending Movies */}
-                <FlatList 
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  keyExtractor={(item, index) => getUniqueKey(item, index)}
-                  data={tradingMov}
-                  className="mt-2"
-                  contentContainerStyle={{ paddingRight: 20 }}
-                  renderItem={({ item, index }) => (
-                    <View className="mr-4 w-32 items-center">
-                      <View className="w-32 h-48 bg-gray-700 rounded-lg mb-2 overflow-hidden">
-                        <View className="flex-1 bg-gray-600 justify-center items-center">
-                          <Text className="text-white text-center text-xs p-2">{item.title}</Text>
-                        </View>
-                      </View>
-                      <Text 
-                        className="text-white text-center text-xs" 
-                        numberOfLines={1}
-                      >
-                        {item.title}
-                      </Text>
-                    </View>
-                  )}
-                />
+              <FlatList 
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        keyExtractor={(item, index) => getUniqueKey(item, index)}
+                        data={tradingMov}
+                        className="mt-2"
+                        contentContainerStyle={{ paddingRight: 20 }}
+                        renderItem={({ item, index }) => (
+                          <TrendingCard movie={item} index={index} />
+                        )}
+                      />
               </View> 
             )}
             
