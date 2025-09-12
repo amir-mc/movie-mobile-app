@@ -1,92 +1,117 @@
+import { useRouter } from "expo-router";
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  ScrollView,
+  Text,
+  View,
+} from "react-native";
+
+import { fetchMovies } from "@/services/api";
+import { getTrendingMovies } from "@/services/appwrite";
+
 import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
-import { fetchMovies } from "@/services/api";
-import { gettrendMovie } from "@/services/appwrite";
 import useFetch from "@/services/useFetch";
-import { useRouter } from "expo-router";
-import { ActivityIndicator, Dimensions, FlatList, Image, ScrollView, Text, View } from "react-native";
 import MovieCard from "../components/MovieCard";
 import Searchbar from "../components/searchbar";
 import TrendingCard from "../components/TrendingCard";
 
-const { width } = Dimensions.get('window');
-
-export default function Index() {
+const Index = () => {
   const router = useRouter();
-  const { data: tradingMov, loading: loadingTrend, error: errorTrend } = useFetch(gettrendMovie);
-  const { data: movie, loading, error } = useFetch(() => fetchMovies({ query: '' }));
 
-  // Function to generate unique keys by combining ID and index
-  const getUniqueKey = (item:any, index:any) => {
-    return `${item.movie_id || item.id}_${index}`;
-  };
+  const {
+    data: trendingMovies,
+    loading: trendingLoading,
+    error: trendingError,
+  } = useFetch(getTrendingMovies);
+
+  const {
+    data: movies,
+    loading: moviesLoading,
+    error: moviesError,
+  } = useFetch(() => fetchMovies({ query: "" }));
 
   return (
     <View className="flex-1 bg-primary">
-      <Image source={images.bg} className="absolute w-full h-full z-0" />
-      
-      <ScrollView 
-        className="flex-1 px-5" 
-        showsVerticalScrollIndicator={false} 
-        contentContainerStyle={{ paddingBottom: 30 }}
+      <Image
+        source={images.bg}
+        className="absolute w-full z-0"
+        resizeMode="cover"
+      />
+
+      <ScrollView
+        className="flex-1 px-5"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ minHeight: "100%", paddingBottom: 10 }}
       >
         <Image source={icons.logo} className="w-12 h-10 mt-20 mb-5 mx-auto" />
-        
-        {loading || loadingTrend ? (
-          <ActivityIndicator size='large' color='#0000ff' className="mt-10 self-center" />
-        ) : error || errorTrend ? (
-          <Text className="text-white">Server Error: {error?.message || errorTrend?.message}</Text>
+
+        {moviesLoading || trendingLoading ? (
+          <ActivityIndicator
+            size="large"
+            color="#0000ff"
+            className="mt-10 self-center"
+          />
+        ) : moviesError || trendingError ? (
+          <Text>Error: {moviesError?.message || trendingError?.message}</Text>
         ) : (
           <View className="flex-1 mt-5">
             <Searchbar
-              onPress={() => router.push("/(tabs)/search")}
-              placeholder="search for mooov"
+              onPress={() => {
+                router.push("/search");
+              }}
+              placeholder="Search for a movie"
             />
-            
-            {tradingMov && (
+
+            {trendingMovies && (
               <View className="mt-10">
                 <Text className="text-lg text-white font-bold mb-3">
                   Trending Movies
                 </Text>
-
-                {/* Horizontal FlatList for Trending Movies */}
-              <FlatList 
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        keyExtractor={(item, index) => getUniqueKey(item, index)}
-                        data={tradingMov}
-                        className="mt-2"
-                        contentContainerStyle={{ paddingRight: 20 }}
-                        renderItem={({ item, index }) => (
-                          <TrendingCard movie={item} index={index} />
-                        )}
-                      />
-              </View> 
+                <FlatList
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  className="mb-4 mt-3"
+                  data={trendingMovies}
+                  contentContainerStyle={{
+                    gap: 26,
+                  }}
+                  renderItem={({ item, index }) => (
+                    <TrendingCard movie={item} index={index} />
+                  )}
+                  keyExtractor={(item, index) => `${item.movie_id}-${index}`}
+                  ItemSeparatorComponent={() => <View className="w-4" />}
+                />
+              </View>
             )}
-            
-            <View className="mt-10">
-              <Text className="text-lg text-white font-bold mb-3">
-                Recently Movie
+
+            <>
+              <Text className="text-lg text-white font-bold mt-5 mb-3">
+                Latest Movies
               </Text>
-              <FlatList 
-                keyExtractor={(item, index) => getUniqueKey(item, index)}
+
+              <FlatList
+                data={movies}
+                renderItem={({ item }) => <MovieCard {...item} />}
+                keyExtractor={(item, index) => `${item.id}-${index}`}
                 numColumns={3}
                 columnWrapperStyle={{
                   justifyContent: "flex-start",
                   gap: 20,
                   paddingRight: 5,
-                  marginBottom: 10
+                  marginBottom: 10,
                 }}
+                className="mt-2 pb-32"
                 scrollEnabled={false}
-                data={movie}
-                renderItem={({ item }) => (
-                  <MovieCard {...item} />
-                )}
               />
-            </View>
+            </>
           </View>
         )}
       </ScrollView>
     </View>
   );
-}
+};
+
+export default Index;
