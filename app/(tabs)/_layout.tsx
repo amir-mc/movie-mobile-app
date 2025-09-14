@@ -91,9 +91,9 @@ const _layout = () => {
         options={{
             title:'Profile',
             headerShown:false,
-              tabBarIcon:({focused})=>(
+              tabBarIcon:({focused})=>( 
                 <TabsIcon focused={focused} iconss={icons.person}/>
-            )
+            ) 
        
         }}
         />
