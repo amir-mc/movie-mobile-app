@@ -12,7 +12,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { icons } from "@/constants/icons";
 import { fetchMovieDetails } from "@/services/api";
 import useFetch from "@/services/usefetch";
-
+  
 interface MovieInfoProps {
   label: string;
   value?: string | number | null;
@@ -41,6 +41,11 @@ const Details = () => {
         <ActivityIndicator />
       </SafeAreaView>
     );
+
+    const grand=()=>{
+      const detailspageing=65;
+      let page=1;
+    }
 
   return (
     <View className="bg-primary flex-1">
