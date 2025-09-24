@@ -11,14 +11,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
  
 import { icons } from "@/constants/icons";
 import { fetchMovieDetails } from "@/services/api";
-import useFetch from "@/services/usefetch";
+import useFetch from "@/services/useFetch";
   
 interface MovieInfoProps {
   label: string;
   value?: string | number | null; 
 }
  
-const MovieDeatils = ({ label, value }: MovieInfoProps) => (
+const MovieInfo = ({ label, value }: MovieInfoProps) => (
   <View className="flex-col items-start justify-center mt-5 "> 
     <Text className="text-light-200 font-normal text-sm">{label}</Text>
     <Text className="text-light-100 font-bold text-sm mt-2"> 
@@ -133,4 +133,4 @@ const Details = () => {
   );
 };
 
-export default MovieDeatils
+export default Details
